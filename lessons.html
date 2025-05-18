@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lessons</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Available Lessons</h1>
+  <ul id="lesson-list"></ul>
+
+  <script>
+    fetch('lessons.json')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('lesson-list');
+        data.forEach(lesson => {
+          const item = document.createElement('li');
+          item.innerHTML = `${lesson.name} - <a href="register.html?id=${lesson.id}">Register</a>`;
+          list.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html>
