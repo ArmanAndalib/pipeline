@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Register for Lesson</h1>
+  <p id="lesson-title">Loading...</p>
+  <form id="registration-form">
+    <label>
+      Your Name:
+      <input type="text" id="student-name" required />
+    </label>
+    <button type="submit">Register</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const lessonId = urlParams.get('id');
+
+    fetch('lessons.json')
+      .then(res => res.json())
+      .then(data => {
+        const lesson = data.find(l => l.id == lessonId);
+        document.getElementById('lesson-title').innerText = `Lesson: ${lesson?.name || 'Not Found'}`;
+      });
+
+    document.getElementById('registration-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('student-name').value;
+      document.getElementById('result').innerText =
+        `✅ ${name}, you have registered for lesson ID ${lessonId}.`;
+    });
+  </script>
+</body>
+</html>
